@@ -11,8 +11,11 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   title: "Budget",
-  viewport:
-    "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
