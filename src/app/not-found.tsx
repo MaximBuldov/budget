@@ -1,16 +1,21 @@
 "use client";
 
-import { BALANCE_ROUTE } from "@/utils/constants";
-import Spin from "antd/es/spin";
+import Button from "antd/es/button";
+import Result from "antd/es/result";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export default function NotFoundPage() {
   const router = useRouter();
-
-  useEffect(() => {
-    router.replace(BALANCE_ROUTE);
-  }, [router]);
-
-  return <Spin spinning fullscreen />;
+  return (
+    <Result
+      status="404"
+      title="404"
+      subTitle="Sorry, the page you visited does not exist."
+      extra={
+        <Button type="primary" onClick={() => router.push("/")}>
+          Back Home
+        </Button>
+      }
+    />
+  );
 }

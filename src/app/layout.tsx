@@ -11,6 +11,16 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   title: "Budget",
+  manifest: "/manifest.json",
+  themeColor: "#52c41a",
+  appleWebApp: {
+    capable: true,
+    title: "Budget App",
+    statusBarStyle: "black-translucent",
+  },
+  icons: {
+    apple: "/icons/icon-192.png",
+  },
 };
 
 export const viewport = {
