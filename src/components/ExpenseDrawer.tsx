@@ -9,6 +9,7 @@ import Form, { useForm } from "antd/es/form/Form";
 import Item from "antd/es/form/FormItem";
 import Input from "antd/es/input";
 import InputNumber from "antd/es/input-number";
+import Select from "antd/es/select";
 import { useEffect } from "react";
 
 interface ExpenseDrawerProps {
@@ -47,6 +48,21 @@ export default function ExpenseDrawer({ data, onClose }: ExpenseDrawerProps) {
       title={data?.label}
     >
       <Form key={data?.id} onFinish={update.mutate} size="large" form={form}>
+        <Item label="Payer" name="userId">
+          <Select
+            options={[
+              {
+                label: "Max",
+                value: 1,
+              },
+              {
+                label: "Jane",
+                value: 2,
+              },
+            ]}
+            style={{ width: "100%" }}
+          />
+        </Item>
         <Item
           label="Label"
           name="label"
