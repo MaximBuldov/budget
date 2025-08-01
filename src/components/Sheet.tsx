@@ -3,10 +3,12 @@ import { SHEET_TYPES } from "@/models/sheet.model";
 import { getExpenses } from "@/services/expenses";
 import { Expense } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
+import Divider from "antd/es/divider";
 import Table, { TableProps } from "antd/es/table";
 import Tag from "antd/es/tag";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
+import Chart from "./Chart";
 import ExpenseDrawer from "./ExpenseDrawer";
 
 export default function Sheet() {
@@ -74,6 +76,8 @@ export default function Sheet() {
           },
         })}
       />
+      <Divider />
+      <Chart expenses={data} />
       <ExpenseDrawer
         data={drawer}
         onClose={(ref?: boolean) => {
