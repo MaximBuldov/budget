@@ -22,8 +22,6 @@ export default function SheetPagination() {
       options={Object.values(SHEET_TYPES).map((type) => type)}
       defaultValue={currentSheet}
       onChange={changeCurrentSheet}
-      size="large"
-      block
     />
   );
 }

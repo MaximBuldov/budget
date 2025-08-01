@@ -1,3 +1,4 @@
+import { Expense } from "@prisma/client";
 import dayjs from "dayjs";
 
 export function getJanePaydays(startDate: Date) {
@@ -53,4 +54,10 @@ export function getMaxPaydays(count: number = 4): number[] {
   }
 
   return results.slice(0, count);
+}
+
+export function balance(index: number, data?: Expense[]) {
+  return Math.round(
+    data?.slice(0, index + 1).reduce((acc, el) => acc + el.amount, 0) || 0
+  );
 }

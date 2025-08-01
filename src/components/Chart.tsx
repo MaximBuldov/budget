@@ -1,4 +1,4 @@
-import { Expense } from "@prisma/client";
+import { ExpenseWithBalance } from "@/models/sheet.model";
 import { useMemo } from "react";
 import {
   CartesianGrid,
@@ -11,7 +11,7 @@ import {
 } from "recharts";
 
 interface ChartProps {
-  expenses?: Expense[];
+  expenses?: ExpenseWithBalance[];
 }
 
 export default function Chart({ expenses }: ChartProps) {
@@ -19,17 +19,17 @@ export default function Chart({ expenses }: ChartProps) {
     () =>
       expenses?.map((el) => ({
         date: `${el.month}/${el.date}`,
-        amount: el.amount,
+        amount: el.balance,
       })),
     [expenses]
   );
   return (
-    <div style={{ width: "100%", height: 600 }}>
+    <div style={{ width: "100%", height: 400 }}>
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart height={300} data={data}>
+        <LineChart data={data}>
           <CartesianGrid strokeDasharray="5 5" />
-          <XAxis dataKey="date" />
-          <YAxis tickCount={10} />
+          <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+          <YAxis tickCount={10} tick={{ fontSize: 10 }} />
           <Line type="monotone" dataKey="amount" />
           <ReferenceLine
             y={0}

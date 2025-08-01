@@ -1,63 +1,50 @@
 "use client";
-import { SHEET_TYPES } from "@/models/sheet.model";
-import { getExpenses } from "@/services/expenses";
+import { ExpenseWithBalance } from "@/models/sheet.model";
 import { Expense } from "@prisma/client";
-import { useQuery } from "@tanstack/react-query";
-import Divider from "antd/es/divider";
 import Table, { TableProps } from "antd/es/table";
 import Tag from "antd/es/tag";
-import { useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
-import Chart from "./Chart";
+import { useState } from "react";
 import ExpenseDrawer from "./ExpenseDrawer";
 
-export default function Sheet() {
-  const searchParams = useSearchParams();
-  const sheet = searchParams.get("sheet") as SHEET_TYPES;
-  const { data, isPending, refetch } = useQuery({
-    queryFn: () => getExpenses(sheet),
-    queryKey: [sheet],
-  });
-  const [drawer, setDrawer] = useState<Expense | null>(null);
-  const columns: TableProps<Expense>["columns"] = useMemo(
-    () => [
-      {
-        title: "What",
-        dataIndex: ["label"],
-        key: "label",
-      },
-      {
-        title: "When",
-        dataIndex: ["date"],
-        key: "date",
-        render: (el, { month }: Expense) => `${month}/${el}`,
-      },
-      {
-        title: "Amount",
-        dataIndex: "amount",
-        key: "amount",
-      },
-      {
-        title: "Balance",
-        key: "balance",
-        render: (_, __, index) => (
-          <Tag
-            color={
-              balance(index, data) < 1500 && balance(index, data) > 0
-                ? "warning"
-                : balance(index, data) < 0
-                  ? "error"
-                  : "success"
-            }
-          >
-            {balance(index, data)}
-          </Tag>
-        ),
-      },
-    ],
-    [data]
-  );
+const columns: TableProps<Expense>["columns"] = [
+  {
+    title: "What",
+    dataIndex: ["label"],
+    key: "label",
+  },
+  {
+    title: "When",
+    dataIndex: ["date"],
+    key: "date",
+    render: (el, { month }: Expense) => `${month}/${el}`,
+  },
+  {
+    title: "Amount",
+    dataIndex: "amount",
+    key: "amount",
+  },
+  {
+    title: "Balance",
+    dataIndex: "balance",
+    key: "balance",
+    render: (el) => (
+      <Tag
+        color={el < 1500 && el > 0 ? "warning" : el < 0 ? "error" : "success"}
+      >
+        {el}
+      </Tag>
+    ),
+  },
+];
 
+interface SheetProps {
+  data?: ExpenseWithBalance[];
+  refetch: () => void;
+  isPending: boolean;
+}
+
+export default function Sheet({ data, isPending, refetch }: SheetProps) {
+  const [drawer, setDrawer] = useState<Expense | null>(null);
   return (
     <>
       <Table
@@ -76,8 +63,6 @@ export default function Sheet() {
           },
         })}
       />
-      <Divider />
-      <Chart expenses={data} />
       <ExpenseDrawer
         data={drawer}
         onClose={(ref?: boolean) => {
@@ -88,11 +73,5 @@ export default function Sheet() {
         }}
       />
     </>
-  );
-}
-
-function balance(index: number, data?: Expense[]) {
-  return Math.round(
-    data?.slice(0, index + 1).reduce((acc, el) => acc + el.amount, 0) || 0
   );
 }
