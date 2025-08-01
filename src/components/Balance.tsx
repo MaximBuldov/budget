@@ -33,8 +33,6 @@ export default function Balance() {
   );
   return (
     <Tabs
-      centered
-      size="small"
       type="card"
       tabBarExtraContent={<SheetPagination />}
       items={[
