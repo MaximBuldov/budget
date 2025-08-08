@@ -92,20 +92,19 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { month, ...data }: Expense = await req.json();
-    if (data.label.includes("Base")) {
+    const { id, label, date, amount, userId }: Expense = await req.json();
+    if (label.includes("Base")) {
       await prisma.balanceSnapshot.update({
-        where: { id: data.id },
+        where: { id },
         data: {
-          amount: data.amount,
+          amount,
           date: new Date(),
         },
       });
     } else {
       await prisma.expense.update({
-        where: { id: data.id },
-        data,
+        where: { id },
+        data: { label, date, userId, amount },
       });
     }
     return NextResponse.json({
