@@ -5,7 +5,7 @@ on:
     branches: ["main"]
 
 concurrency:
-  group: grocery-prod
+  group: budget-prod
   cancel-in-progress: true
 
 jobs:
@@ -39,7 +39,7 @@ jobs:
             npm run build
 
             echo '--- pm2 restart ---'
-            pm2 restart grocery || PORT=3001 pm2 start npm --name grocery -- run start
+            pm2 restart budget || PORT=3042 pm2 start npm --name budget -- run start
 
             pm2 save
             pm2 status
