@@ -28,7 +28,6 @@ export default function LoginPage() {
       router.push(BALANCE_ROUTE);
     },
   });
-
   return (
     <Flex justify="center" align="center" style={boxStyle}>
       <Card title="Login" variant="borderless" style={{ width: "90%" }}>
