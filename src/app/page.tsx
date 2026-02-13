@@ -4,7 +4,7 @@ import { ILoginForm } from "@/models/login.model";
 import { login } from "@/services/auth";
 import { BALANCE_ROUTE } from "@/utils/constants";
 import { useMutation } from "@tanstack/react-query";
-import Button from "antd/es/button/button";
+import Button from "antd/es/button/Button";
 import Card from "antd/es/card/Card";
 import Flex from "antd/es/flex";
 import Form, { useForm } from "antd/es/form/Form";
